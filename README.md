@@ -270,7 +270,7 @@ Deployment and live demo links will be added after successful deployment and tes
 
 **Live Demo:** https://trace-less-postgre-sql-project.vercel.app
 
-**GitHub:** https://github.com/jahnavikore15-code/TraceLess-PostgreSQL-Project
+**Medium:** https://medium.com/@jahnavikore15/traceless-5d4c464e7f29?sharedUserId=jahnavikore15
 
 **Technology:** Flask + PostgreSQL
 
