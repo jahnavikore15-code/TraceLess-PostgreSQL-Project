@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}Create account · TraceLess{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <div class="brand large"><span class="brand-icon">T</span> TraceLess</div>
+  <p class="eyebrow">START WITH A CLEARER DIGITAL LIFE</p><h1>Create your account</h1>
+  <form method="post" class="stack">
+    <label>Your name<input name="name" placeholder="Your name" required></label>
+    <label>Email<input type="email" name="email" placeholder="you@example.com" required></label>
+    <label>Password<input type="password" name="password" minlength="8" placeholder="At least 8 characters" required></label>
+    <button class="btn primary" type="submit">Create account</button>
+  </form>
+  <p class="muted center">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+</section>
+{% endblock %}

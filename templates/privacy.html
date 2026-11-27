@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Privacy checklist · TraceLess{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">SMALL STEPS, BETTER HABITS</p><h1>Privacy checklist</h1><p class="muted">Track the privacy actions you have reviewed.</p></div></div>
+<section class="section-card">
+<h2>Add a checklist item</h2>
+<form method="post" class="inline-form"><input name="title" placeholder="e.g. Review connected third-party apps" required><button class="btn primary" type="submit">Add item</button></form>
+</section>
+<section class="section-card">
+<div class="section-title"><div><h2>Your checklist</h2><p class="muted">Tick items when you have completed them.</p></div><span class="pill">{{ items|selectattr(2)|list|length }} completed</span></div>
+{% if items %}
+<div class="check-list">{% for item in items %}
+<div class="check-row"><form method="post" action="{{ url_for('toggle_privacy', item_id=item[0]) }}"><button class="check-button {% if item[2] %}checked{% endif %}" type="submit">{% if item[2] %}✓{% endif %}</button></form><span class="{% if item[2] %}done-text{% endif %}">{{ item[1] }}</span><form method="post" action="{{ url_for('delete_privacy', item_id=item[0]) }}"><button class="text-btn danger" type="submit">Remove</button></form></div>
+{% endfor %}</div>
+{% else %}<div class="empty"><h3>Your checklist is empty</h3><p>Add a privacy action you want to remember.</p></div>{% endif %}
+</section>
+{% endblock %}

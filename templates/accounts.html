@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% block title %}My accounts · TraceLess{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">ACCOUNT REGISTRY</p><h1>My accounts</h1><p class="muted">Keep track of the online services you use.</p></div></div>
+<section class="section-card">
+<h2>Add an account</h2>
+<form method="post" action="{{ url_for('add_account') }}" class="form-grid">
+  <label>Platform name<input name="platform" placeholder="e.g. GitHub" required></label>
+  <label>Category<select name="category"><option>Social</option><option>Work</option><option>Shopping</option><option>Finance</option><option>Entertainment</option><option>Education</option><option>Other</option></select></label>
+  <label>Username or email<input name="username" placeholder="Account identifier (not password)" required></label>
+  <label>Last used<input type="date" name="last_used" max="{{ today }}"></label>
+  <label class="full">Notes<textarea name="notes" rows="2" placeholder="Optional note"></textarea></label>
+  <div class="full"><button class="btn primary" type="submit">Save account</button></div>
+</form>
+</section>
+<section class="section-card">
+<div class="section-title"><div><h2>Saved accounts</h2><p class="muted">Accounts with no activity date or last used over 90 days ago need review.</p></div><span class="pill">{{ accounts|length }} total</span></div>
+{% if accounts %}
+<div class="table-wrap"><table><thead><tr><th>Platform</th><th>Account</th><th>Last used</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+{% for a in accounts %}
+{% set inactive = not a['last_used'] or (today|string)[:10] > a['last_used'].strftime('%Y-%m-%d') %}
+<tr><td><strong>{{ a['platform'] }}</strong><small>{{ a['category'] }}</small></td><td>{{ a['username'] }}</td><td>{{ a['last_used'].strftime('%d %b %Y') if a['last_used'] else 'Not recorded' }}</td><td><span class="status {% if a['needs_review'] %}warning{% else %}good{% endif %}">{% if a['needs_review'] %}Review{% else %}Tracked{% endif %}</span></td><td class="actions">
+<form method="post" action="{{ url_for('mark_used', account_id=a['id']) }}"><button class="text-btn" type="submit">Mark used</button></form>
+<form method="post" action="{{ url_for('delete_account', account_id=a['id']) }}" onsubmit="return confirm('Delete this account record?')"><button class="text-btn danger" type="submit">Delete</button></form>
+</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% else %}<div class="empty"><span>◎</span><h3>No accounts yet</h3><p>Use the form above to add your first platform.</p></div>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block title %}Overview · TraceLess{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">YOUR PERSONAL SPACE</p><h1>Good to see you, {{ session.get('user_name') }}.</h1><p class="muted">A clearer view of the accounts you use online.</p></div><a class="btn primary" href="{{ url_for('accounts') }}">+ Add an account</a></div>
+<section class="score-panel">
+  <div><p class="eyebrow">DIGITAL FOOTPRINT HEALTH</p><h2>{{ score }}<small>/100</small></h2><p class="muted">An organizational score based on your account review and checklist.</p></div>
+  <div class="score-ring" style="--score:{{ score }}%"><span>{{ score }}%</span></div>
+</section>
+<div class="stats-grid">
+  <article class="stat-card"><span class="stat-icon">◎</span><p>Total accounts</p><strong>{{ total }}</strong></article>
+  <article class="stat-card"><span class="stat-icon">◷</span><p>Needs a review</p><strong>{{ inactive }}</strong></article>
+  <article class="stat-card"><span class="stat-icon">✓</span><p>Privacy checks done</p><strong>{{ done }}<small>/{{ checks }}</small></strong></article>
+</div>
+<section class="section-card">
+  <div class="section-title"><div><h2>Recently added</h2><p class="muted">Your latest registered platforms</p></div><a href="{{ url_for('accounts') }}">View all →</a></div>
+  {% if recent %}
+  <div class="account-list">{% for a in recent %}
+    <div class="account-row"><div class="platform-mark">{{ a['platform'][0]|upper }}</div><div class="account-info"><strong>{{ a['platform'] }}</strong><span>{{ a['username'] }} · {{ a['category'] }}</span></div><span class="pill">{{ a['last_used'].strftime('%d %b %Y') if a['last_used'] else 'Date not set' }}</span></div>
+  {% endfor %}</div>
+  {% else %}<div class="empty"><span>✦</span><h3>Your account list starts here</h3><p>Add the online services you want to keep track of.</p><a class="btn primary" href="{{ url_for('accounts') }}">Add your first account</a></div>{% endif %}
+</section>
+<div class="tip"><strong>Privacy reminder</strong><span>TraceLess never needs your actual account passwords. Only save a platform name and account identifier.</span></div>
+{% endblock %}
