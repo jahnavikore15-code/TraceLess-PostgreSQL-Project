@@ -9,6 +9,7 @@ The application provides a centralized place to manually record online platforms
 ---
 
 ## 🚀 Live Demo
+**Demo video:** https://youtu.be/K7B64UVlsAI?si=QsN6vJiJhkpZsU-J 
 
 **Frontend:** https://trace-less-postgre-sql-project.vercel.app
 
